@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.basedata.mapper.SubjectMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.basedata.pojo.entity.Subject">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    <!--@Table t_subject-->
+    <id column="subject_id" jdbcType="BIGINT" property="subjectId" />
+    <result column="subject_type_id" jdbcType="BIGINT" property="subjectTypeId" />
+    <result column="catetory_id" jdbcType="BIGINT" property="catetoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="field1" jdbcType="VARCHAR" property="field1" />
+    <result column="field2" jdbcType="VARCHAR" property="field2" />
+    <result column="field3" jdbcType="VARCHAR" property="field3" />
+  </resultMap>
+  <resultMap id="queryResult" type="com.boss.bes.basedata.pojo.dto.subject.SubjectDataItemDTO">
+    <result column="subjectId" property="subjectId"></result>
+    <collection property="answers" column="subjectId" javaType="ArrayList" ofType="com.boss.bes.basedata.pojo.entity.SubjectAnswer" select="selectSubjectAnswer">
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    subject_id, subject_type_id, catetory_id, `name`, image_url, remark, `status`, org_id, 
+    company_id, created_by, created_time, updated_by, updated_time, version, field1, 
+    field2, field3
+  </sql>
+  <select id="selectSubjectAnswer" resultType="com.boss.bes.basedata.pojo.entity.SubjectAnswer">
+    SELECT
+        sa.subject_answer_id as subjectAnswerId,
+        sa.subject_id as subjectId,
+        sa.answer,
+        sa.right_answer as rightAnswer,
+        sa.image_url as imageUrl
+    FROM t_subject_answer sa
+    WHERE sa.subject_id = #{subjectId}
+  </select>
+  <select id="queryByCondition" resultMap="queryResult">
+    SELECT
+    s.subject_id as subjectId,
+    s.subject_type_id as subjectTypeId,
+    s.catetory_id as categoryId,
+    s.name as name,
+    s.image_url as imageUrl,
+    s.remark as remark,
+    si.difficult as difficulty,
+    st.subject_type_name as subjectTypeName,
+    sc.name as categoryName,
+    s.status as status,
+    s.updated_time as updatedTime,
+    s.org_id as orgId,
+    s.company_id as companyId,
+    s.version as version
+    FROM t_subject s
+         left outer join t_subject_type st on s.subject_type_id = st.subject_type_id
+         left outer join t_category sc on s.catetory_id = sc.category_id
+		 left outer join t_comb_exam_config_item si on s.catetory_id = si.category_id
+    <where>
+      <if test=" name != ''  and name != null">
+        AND s.name = #{name}
+      </if>
+      <if test=" subjectTypeName != ''  and subjectTypeName != null">
+        AND st.subject_type_name = #{subjectTypeName}
+      </if>
+      <if test=" categoryName != ''  and categoryName != null">
+        AND sc.name = #{categoryName}
+      </if>
+    </where>
+  </select>
+  <select id="queryById" resultMap="queryResult">
+    SELECT
+    s.subject_id as subjectId,
+    s.subject_type_id as subjectTypeId,
+    s.catetory_id as categoryId,
+    s.name as name,
+    s.image_url as imageUrl,
+    st.subject_type_name as subjectTypeName,
+    sc.name as categoryName,
+    s.status as status,
+    s.created_by as createdBy,
+    s.created_time as createdTime,
+    s.updated_time as updatedTime,
+    s.org_id as orgId,
+    s.company_id as companyId,
+    s.version as version,
+    s.remark as remark
+    FROM t_subject s
+    left outer join t_subject_type st on s.subject_type_id = st.subject_type_id
+    left outer join t_category sc on s.catetory_id = sc.category_id
+    <where>
+      s.subject_id = #{subjectId}
+    </where>
+  </select>
+  <select id="findCategoryIdByCategoryName" resultType="Long">
+    SELECT c.category_id as categoryId
+    from t_category c
+    <where>
+      c.name = #{categoryName}
+    </where>
+  </select>
+  <select id="findSubjectTypeIdBySubjectTypeName" resultType="Long">
+    SELECT st.subject_type_id as subjectTypeId
+    from t_subject_type st
+    <where>
+      st.subject_type_name = #{SubjectTypeName}
+    </where>
+  </select>
+  <delete id="deleteSubjectAnswer">
+    delete from t_subject_answer
+    <where>
+      subject_id = #{subjectId}
+    </where>
+  </delete>
+  <select id="quickMakePaper" resultMap="queryResult">
+    SELECT
+    s.subject_id as subjectId,
+    s.subject_type_id as subjectTypeId,
+    s.catetory_id as categoryId,
+    s.name as name,
+    si.difficult as difficulty,
+    st.subject_type_name as subjectTypeName,
+    sc.name as categoryName,
+    s.status as status,
+    s.updated_time as updatedTime,
+    s.org_id as orgId,
+    s.company_id as companyId,
+    s.version as version
+    FROM t_subject s
+    left outer join t_subject_type st on s.subject_type_id = st.subject_type_id
+    left outer join t_category sc on s.catetory_id = sc.category_id
+	left outer join t_comb_exam_config_item si on s.catetory_id = si.category_id
+    <where>
+      <if test=" difficulty != ''  and difficulty != null">
+        AND si.difficult = #{difficulty}
+      </if>
+      <if test=" subjectTypeName != ''  and subjectTypeName != null">
+        AND st.subject_type_name = #{subjectTypeName}
+      </if>
+      <if test=" categoryName != ''  and categoryName != null">
+        AND sc.name = #{categoryName}
+      </if>
+    </where>
+    LIMIT #{num}
+  </select>
+  <select id="getSubjectDtoByIds" resultMap="queryResult">
+    SELECT
+    s.subject_id as subjectId,
+    s.subject_type_id as subjectTypeId,
+    s.catetory_id as categoryId,
+    s.name as name,
+    st.subject_type_name as subjectTypeName,
+    sc.name as categoryName,
+    s.status as status,
+    s.updated_time as updatedTime,
+    s.org_id as orgId,
+    s.company_id as companyId,
+    s.version as version
+    FROM t_subject s
+    left outer join t_subject_type st on s.subject_type_id = st.subject_type_id
+    left outer join t_category sc on s.catetory_id = sc.category_id
+    <where>
+      <if test=" id != ''  and id != null">
+        AND s.subject_id = #{id}
+      </if>
+    </where>
+  </select>
+</mapper>

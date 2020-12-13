@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.paper.dao.mapper.PaperSubjectMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.paper.pojo.entity.PaperSubject">
+    <!--@mbg.generated-->
+    <!--@Table t_paper_subject-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="paper_id" jdbcType="BIGINT" property="paperId" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="subject_type" jdbcType="VARCHAR" property="subjectType" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="difficulty" jdbcType="BIGINT" property="difficulty" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="field1" jdbcType="VARCHAR" property="field1" />
+    <result column="field2" jdbcType="VARCHAR" property="field2" />
+    <result column="field3" jdbcType="VARCHAR" property="field3" />
+  </resultMap>
+
+  <insert id ="insertSubjects" parameterType="java.util.List" >
+        insert ignore into t_paper_subject
+        (id, paper_id, subject, subject_type, category_id, difficulty, score, `status`, org_id,
+    company_id, created_by, created_time, updated_by, updated_time, version, field1,
+    field2, field3)
+        values
+        <foreach collection ="list" item="subject" index= "index" separator =",">
+            (
+            #{subject.id},#{subject.paperId},#{subject.subject},#{subject.subjectType},
+            #{subject.categoryId},#{subject.difficulty},#{subject.score},
+            #{subject.status},#{subject.orgId},#{subject.companyId},#{subject.createdBy},#{subject.createdTime},#{subject.updatedBy},#{subject.updatedTime},
+            #{subject.version},#{subject.field1},#{subject.field2},#{subject.field3}
+            )
+        </foreach>
+   </insert>
+   <select id="selectSubjectsByType" resultMap="BaseResultMap">
+        select * from t_paper_subject where subject_type= #{subjectType} and paper_id in
+        <foreach collection="paperList" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+   </select>
+
+
+
+
+</mapper>

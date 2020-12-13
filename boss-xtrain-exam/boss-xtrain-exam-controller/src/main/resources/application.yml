@@ -1,0 +1,40 @@
+#server:
+#  port: 8081
+#
+#spring:
+#  application:
+#    name: exam-center
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 39.101.188.216:8848
+#  datasource:
+#    username: root
+#    password: bes123
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.92.200.55:3306/bes?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+#  main:
+#    allow-bean-definition-overriding: true
+#  redis:
+#    host: 47.98.246.225
+#    password: WYZ980417
+#    port: 6379
+#  #rabbitmq相关配置
+#  rabbitmq:
+#    host: 39.101.188.216
+#    port: 5672
+#    username: boss_learn
+#    password: 123456
+#logging:
+#  level:
+#    com.boss.bes.exam.mapper.*: debug
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#rabbitmq:
+#  delay:
+#    exchange: delay_exchange
+#    queue: delay_queue
+#    key: delay_key

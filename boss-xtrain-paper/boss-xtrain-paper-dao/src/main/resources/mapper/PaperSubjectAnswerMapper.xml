@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.paper.dao.mapper.PaperSubjectAnswerMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.paper.pojo.entity.PaperSubjectAnswer">
+    <!--@mbg.generated-->
+    <!--@Table t_paper_subject_answer-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="subject_id" jdbcType="BIGINT" property="subjectId" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="right_answer" jdbcType="TINYINT" property="rightAnswer" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="field1" jdbcType="VARCHAR" property="field1" />
+    <result column="field2" jdbcType="VARCHAR" property="field2" />
+    <result column="field3" jdbcType="VARCHAR" property="field3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, subject_id, answer, right_answer, image_url, `status`, org_id, company_id, created_by,
+    created_time, updated_by, updated_time, version, field1, field2, field3
+  </sql>
+
+  <insert id ="insertAnswers" parameterType="java.util.List" >
+        insert ignore into t_paper_subject_answer
+        (id, subject_id, answer, right_answer, image_url, `status`, org_id, company_id, created_by,
+    created_time, updated_by, updated_time, version, field1, field2, field3)
+        values
+        <foreach collection ="list" item="answer" index= "index" separator =",">
+            (
+            #{answer.id}, #{answer.subjectId},#{answer.answer},#{answer.rightAnswer},#{answer.imageUrl},
+            #{answer.status},#{answer.orgId},#{answer.companyId},#{answer.createdBy},#{answer.createdTime},#{answer.updatedBy},#{answer.updatedTime},
+            #{answer.version},#{answer.field1},#{answer.field2},#{answer.field2}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectSubjectAnswer" resultMap="BaseResultMap">
+        select * from t_paper_subject_answer where subject_id in
+        <foreach collection="subjectIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+
+</mapper>

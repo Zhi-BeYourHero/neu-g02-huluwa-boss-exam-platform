@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.Company">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_company-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_o_id" jdbcType="BIGINT" property="organizationId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="mnemonic_code" jdbcType="VARCHAR" property="mnemonicCode" />
+    <result column="master" jdbcType="VARCHAR" property="master" />
+    <result column="tax" jdbcType="VARCHAR" property="tax" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    id, t_o_id, `name`, code, mnemonic_code, master, tax, fax, tel, address, email, website, 
+    `status`, created_by, created_time, updated_by, updated_time, version
+  </sql>
+
+  <select id="selectNameByPrimaryKey" parameterType="Long" resultType="com.boss.bes.system.entity.Company">
+  select
+  c.id,c.t_o_id,c.name,c.code,c.mnemonic_code,c.master,c.tax,c.fax,c.tel,c.address,c.email,c.website,c.status,c.created_time,
+  c.created_by,c.updated_by,c.updated_time,c.version
+  from t_company c
+  where c.id=#{id}
+</select>
+</mapper>

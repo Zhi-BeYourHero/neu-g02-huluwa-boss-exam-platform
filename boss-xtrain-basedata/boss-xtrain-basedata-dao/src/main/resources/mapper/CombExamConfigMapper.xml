@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.basedata.mapper.CombExamConfigMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.basedata.pojo.entity.CombExamConfig">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    <!--@Table t_comb_exam_config-->
+    <id column="comb_exam_id" jdbcType="BIGINT" property="combExamId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <resultMap id="queryResult" type="com.boss.bes.basedata.pojo.dto.combexamconfig.CombExamConfigDataItemDTO">
+    <result column="combExamId" property="combExamId"></result>
+    <collection property="configItems" column="combExamId" javaType="ArrayList" ofType="com.boss.bes.basedata.pojo.dto.combexamconfig.CombExamConfigItemDTO" select="selectCombExamConfigItem">
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    comb_exam_id, `name`, remark, `status`, org_id, company_id, created_by, created_time, 
+    updated_by, updated_time, version
+  </sql>
+  <select id="selectCombExamConfigItem" resultType="com.boss.bes.basedata.pojo.dto.combexamconfig.CombExamConfigItemDTO">
+    SELECT
+        c.comb_exam_config_item_id as combExamConfigItemId,
+        st.subject_type_name as subjectTypeName,
+        sc.name as categoryName,
+        c.comb_exam_id as combExamId,
+        c.difficult as difficult,
+        c.num as num,
+        c.score as score
+    FROM t_comb_exam_config_item c
+         left outer join t_subject_type st on c.subject_type_id = st.subject_type_id
+         left outer join t_category sc on c.category_id = sc.category_id
+    WHERE c.comb_exam_id = #{combExamId}
+  </select>
+  <select id="queryByCondition" resultMap="queryResult">
+    SELECT distinct
+    c.comb_exam_id as combExamId,
+    c.name as name,
+    c.remark as remark,
+    c.status as status,
+    c.org_id as orgId,
+    c.company_id as companyId,
+    c.updated_by as updatedBy,
+    c.updated_time as updatedTime,
+    1 as difficulty,
+    c.version as version
+    FROM t_comb_exam_config c
+    <where>
+      <if test=" name != ''  and name != null">
+        AND c.name = #{name}
+      </if>
+    </where>
+  </select>
+  <select id="getConfigList" resultType="com.boss.bes.basedata.pojo.dto.combexamconfig.CombExamConfigListDTO">
+        select
+            c.comb_exam_id as combExamId,
+            c.name as name,
+            c.updated_by as updatedBy,
+            c.updated_time as updatedTime,
+            ci.difficult as difficulty
+        FROM  t_comb_exam_config c join t_comb_exam_config_item ci on c.comb_exam_id = ci.comb_exam_id
+    <where>
+      <if test=" name != ''  and name != null">
+        AND c.name = #{name}
+      </if>
+      <if test=" difficulty != ''  and difficulty != null">
+        AND ci.difficult = #{difficulty}
+      </if>
+    </where>
+      order by updated_time desc
+  </select>
+    <select id="queryById" resultMap="queryResult">
+        SELECT
+        c.comb_exam_id as combExamId,
+        c.name as name,
+        c.remark as remark,
+        c.status as status,
+        c.org_id as orgId,
+        c.company_id as companyId,
+        c.created_by as createdBy,
+        c.created_time as createdTime,
+        c.updated_by as updatedBy,
+        c.updated_time as updatedTime,
+        ci.difficult as difficulty,
+        c.version as version
+        FROM t_comb_exam_config c join t_comb_exam_config_item ci on c.comb_exam_id = ci.comb_exam_id
+        <where>
+            c.comb_exam_id = #{combExamId}
+        </where>
+    </select>
+</mapper>

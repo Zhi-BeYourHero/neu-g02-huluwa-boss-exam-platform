@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.UserRole">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_user_role-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="t_r_id" jdbcType="BIGINT" property="roleId" />
+  </resultMap>
+
+  <resultMap id="ReviewerResult" type="com.boss.bes.system.entity.User"/>
+  <select id="selectAllReviewer" resultMap="ReviewerResult">
+    select * from t_user
+                    left join t_user_role on t_user.id = t_user_role.id
+                    left join t_role on t_user_role.t_r_id = t_role.id
+    where t_role.name= '阅卷官'
+  </select>
+
+  <!-- 批量新增-->
+  <insert id="saveList" parameterType="java.util.List">
+    INSERT INTO t_user_role (id, t_r_id)
+    VALUES
+    <foreach collection="userRoles" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT},#{item.roleId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByRoleIds" parameterType="java.util.List">
+    DELETE FROM t_user_role
+    WHERE t_r_id in
+    <foreach collection="roleIds"  open="(" close=")" separator=","  item="item" >
+      #{item}
+    </foreach>
+  </delete>
+
+  <delete id="deleteByUserIds" parameterType="java.util.List">
+    DELETE FROM t_user_role
+    WHERE id in
+    <foreach collection="userIds"  open="(" close=")" separator=","  item="item" >
+      #{item}
+    </foreach>
+  </delete>
+
+  <select id="queryRoleIdsByUserId" resultType="java.lang.Long">
+    SELECT t_r_id FROM t_user_role
+    WHERE id = #{userId}
+  </select>
+
+  <select id="queryUserIdsByRoleId" resultType="java.lang.Long">
+    SELECT id FROM t_user_role
+    WHERE t_r_id = #{roleId}
+  </select>
+</mapper>

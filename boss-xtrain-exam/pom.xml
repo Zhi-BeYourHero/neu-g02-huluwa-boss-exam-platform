@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>neu-g02-huluwa-boss-exam-platform</artifactId>
+        <groupId>huluwa</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>boss-xtrain-exam</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>boss-xtrain-exam-api</module>
+        <module>boss-xtrain-exam-controller</module>
+        <module>boss-xtrain-exam-service</module>
+        <module>boss-xtrain-exam-dao</module>
+        <module>boss-xtrain-exam-model</module>
+        <module>boss-xtrain-exam-config</module>
+        <module>boss-xtrain-exam-util</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-model</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-dao</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-service</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-controller</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-config</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-util</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-exam-api</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+</project>

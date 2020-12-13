@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  boss.xtrain.cache.redis.configure.RedisConfig,\
+  boss.xtrain.cache.redis.configure.DistributedLockAutoConfiguration,\
+  boss.xtrain.cache.redis.configure.DistributedLockAspectConfiguration,\
+  boss.xtrain.cache.redis.service.RedisService

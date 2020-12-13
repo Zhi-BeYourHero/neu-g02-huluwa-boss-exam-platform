@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.exam.mapper.ExamPublishRecordMapper">
+    <resultMap id="BaseResultMap" type="com.boss.bes.exam.model.po.ExamPublishRecord">
+        <!--@mbg.generated generated on Tue Jul 07 10:40:13 CST 2020.-->
+        <!--@Table t_exam_publish_record-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="t_p_id" jdbcType="BIGINT" property="tPId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="exam_batch_no" jdbcType="VARCHAR" property="examBatchNo"/>
+        <result column="publisher" jdbcType="BIGINT" property="publisher"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="plan_people_num" jdbcType="INTEGER" property="planPeopleNum"/>
+        <result column="limit_time" jdbcType="INTEGER" property="limitTime"/>
+        <result column="descript" jdbcType="VARCHAR" property="descript"/>
+        <result column="marking_mode" jdbcType="BIGINT" property="markingMode"/>
+        <result column="marking_stop_time" jdbcType="TIMESTAMP" property="markingStopTime"/>
+        <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="company_id" jdbcType="BIGINT" property="companyId"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="field1" jdbcType="VARCHAR" property="field1"/>
+        <result column="field2" jdbcType="VARCHAR" property="field2"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated generated on Tue Jul 07 10:40:13 CST 2020.-->
+        id, t_p_id, title, exam_batch_no, publisher, start_time, end_time, plan_people_num,
+        limit_time, descript, marking_mode, marking_stop_time, qrcode_url, `status`, company_id,
+        created_by, created_time, updated_by, updated_time, version, field1, field2
+    </sql>
+
+    <select id="getAllReviewer" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT t_u_id
+        FROM t_publish_user_relation
+        where t_p_id = #{id}
+    </select>
+    <insert id="insertReviewerRelation" parameterType="java.util.List">
+        INSERT INTO t_publish_user_relation
+                (t_p_id, t_u_id)VALUES
+        <foreach collection="examReviewerRelationDTOS" index="index" item="item" separator=",">
+            (#{item.examId,jdbcType=BIGINT}, #{item.reviewer,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <delete id="deleteReviewerRelation" parameterType="java.lang.Long">
+        DELETE
+        FROM t_publish_user_relation
+        where t_p_id = #{examId}
+    </delete>
+    <update id="publishExam" parameterType="com.boss.bes.exam.model.po.ExamPublishRecord">
+        UPDATE t_exam_publish_record
+        set status=1,
+            version=version + 1,
+            qrcode_url=#{qrcodeUrl},
+            updated_time=current_timestamp,
+            version=version + 1
+        WHERE id = #{id}
+          AND status = 0
+          AND version = #{version}
+    </update>
+    <update id="updateExam" parameterType="com.boss.bes.exam.model.po.ExamPublishRecord">
+        UPDATE t_exam_publish_record
+        set t_p_id=#{tPId},
+            start_time=#{startTime},
+            end_time=#{endTime},
+            plan_people_num=#{planPeopleNum},
+            limit_time=#{limitTime},
+            descript=#{descript},
+            marking_mode=#{markingMode},
+            title=#{title},
+            plan_people_num=#{planPeopleNum},
+            marking_stop_time=#{markingStopTime},
+            updated_by=#{updatedBy},
+            updated_time=current_timestamp,
+            version=version + 1
+        where id = #{id}
+          AND version = #{version}
+          AND status = 0
+    </update>
+    <update id="setReviewTimeOut" parameterType="java.lang.Long">
+        UPDATE t_exam_publish_record
+        SET status=2
+        WHERE id = #{id}
+    </update>
+    <select id="getById" resultMap="BaseResultMap">
+        select *
+        from t_exam_publish_record
+        where id = #{id}
+    </select>
+    <select id="getPaperIdById" resultMap="BaseResultMap">
+        select *
+        from t_exam_publish_record
+        where id = #{id}
+    </select>
+    <select id="getByPaperId" resultMap="BaseResultMap">
+        select *
+        from t_exam_publish_record
+        where t_p_id = #{id}
+    </select>
+    <select id="getExamReviewById" resultType="java.lang.Long">
+        SELECT t_u_id from t_publish_user_relation where t_p_id=#{ID,jdbcType=BIGINT}
+    </select>
+</mapper>

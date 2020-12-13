@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.User">
+    <!--@mbg.generated generated on Tue Jul 07 10:08:16 CST 2020.-->
+    <!--@Table t_user-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_d_id" jdbcType="BIGINT" property="departmentId" />
+    <result column="t_c_id" jdbcType="BIGINT" property="companyId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="profile_picture" jdbcType="VARCHAR" property="profilePicture" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="INTEGER" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:08:16 CST 2020.-->
+    id, t_d_id, t_c_id, code, `password`, `name`, profile_picture, sex, birthday, tel, 
+    email, other, remark, `status`, created_by, created_time, updated_by, updated_time, 
+    version
+  </sql>
+
+  <!-- start -->
+  <!-- 网关用户鉴权用 -->
+  <resultMap type="boss.xtrain.security.domain.SysUser" id="SysUserResult">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_d_id" jdbcType="BIGINT" property="deptId" />
+    <result column="t_c_id" jdbcType="BIGINT" property="companyId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="profile_picture" jdbcType="VARCHAR" property="profilePicture" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="INTEGER" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <collection property="sysRoles"   javaType="java.util.List" resultMap="SysRoleResult" />
+  </resultMap>
+
+  <resultMap id="SysRoleResult" type="boss.xtrain.security.domain.SysRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="r_t_c_id" jdbcType="BIGINT" property="companyId" />
+    <result column="r_t_o_id" jdbcType="BIGINT" property="orgId" />
+    <result column="r_name" jdbcType="VARCHAR" property="name" />
+    <result column="r_code" jdbcType="VARCHAR" property="code" />
+    <result column="r_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="r_status" jdbcType="TINYINT" property="status" />
+    <result column="r_created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="r_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="r_updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="r_updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="r_version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+
+  <sql id="selectUserVo">
+    SELECT
+      u.id,u.name,u.t_d_id, u.t_c_id, u.code, u.`password`,
+      u.`name`, u.profile_picture, u.sex, u.birthday, u.tel,
+      u.email, u.other, u.remark, u.`status`, u.created_by,
+      u.created_time, u.updated_by, u.updated_time, u.version,
+      r.id as r_id,r.t_c_id as r_t_c_id,r.t_o_id as r_t_o_id,
+      r.name as r_name,r.code as r_code,r.remark as r_remark,
+      r.status as r_status,r.created_by as r_created_by,r.created_time as r_created_time,
+      r.updated_by as r_updated_by,r.updated_time as r_updated_time,r.version as r_version
+    FROM `t_user` u
+           LEFT JOIN t_user_role ur on ur.id = u.id
+           LEFT JOIN t_role r on r.id = ur.t_r_id
+  </sql>
+
+  <select id="selectSysUserByUserName" parameterType="String" resultMap="SysUserResult">
+    <include refid="selectUserVo"/>
+    where u.name = #{username}
+  </select>
+  <!-- end -->
+
+  <select id="queryWithRole" parameterType="com.boss.bes.system.query.UserQuery" resultType="com.boss.bes.system.entity.User">
+    SELECT *
+    FROM `t_user` left join t_user_role ON t_user.id = t_user_role.id
+    <where>
+      <if test="userQuery.code != null and userQuery.code != ''">
+        AND code = #{userQuery.code,jdbcType=VARCHAR}
+      </if>
+      <if test="userQuery.name != null and userQuery.name != ''">
+        AND code = #{userQuery.name,jdbcType=VARCHAR}
+      </if>
+      <if test="userQuery.companyId != null and userQuery.companyId != ''">
+        AND t_c_id = #{userQuery.companyId,jdbcType=BIGINT}
+      </if>
+      <if test="userQuery.tel != null and userQuery.tel != ''">
+        AND tel = #{userQuery.tel,jdbcType=VARCHAR}
+      </if>
+      <if test="userQuery.status != null">
+        AND status = #{userQuery.status,jdbcType=INTEGER}
+      </if>
+      <if test="userQuery.roleId != null">
+        AND t_r_id = #{userQuery.roleId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
+
+</mapper>

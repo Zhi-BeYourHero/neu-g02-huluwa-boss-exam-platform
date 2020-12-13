@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.basedata.mapper.CombExamConfigItemMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.basedata.pojo.entity.CombExamConfigItem">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    <!--@Table t_comb_exam_config_item-->
+    <id column="comb_exam_config_item_id" jdbcType="BIGINT" property="combExamConfigItemId" />
+    <result column="subject_type_id" jdbcType="BIGINT" property="subjectTypeId" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="comb_exam_id" jdbcType="BIGINT" property="combExamId" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="difficult" jdbcType="BIGINT" property="difficult" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    comb_exam_config_item_id, subject_type_id, category_id, comb_exam_id, num, difficult, 
+    score
+  </sql>
+  <select id="findCategoryIdByCategoryName" resultType="Long">
+    SELECT c.category_id as categoryId
+    from t_category c
+    <where>
+      c.name = #{categoryName}
+    </where>
+  </select>
+  <select id="findSubjectTypeIdBySubjectTypeName" resultType="Long">
+    SELECT st.subject_type_id as subjectTypeId
+    from t_subject_type st
+    <where>
+      st.subject_type_name = #{SubjectTypeName}
+    </where>
+  </select>
+  <delete id="deleteCombExamConfigItem">
+    delete from t_comb_exam_config_item
+    <where>
+      comb_exam_id = #{combExamId}
+    </where>
+  </delete>
+  <select id="getConfigItem" resultType="com.boss.bes.basedata.pojo.dto.combexamconfig.CombExamConfigItemListDTO">
+    SELECT
+        st.subject_type_name as subjectType,
+        sc.name as category,
+        c.difficult as difficult,
+        c.num as num,
+        c.score as score
+    FROM t_comb_exam_config_item c
+         left outer join t_subject_type st on c.subject_type_id = st.subject_type_id
+         left outer join t_category sc on c.category_id = sc.category_id
+    WHERE comb_exam_config_item_id = #{combExamConfigItemId}
+  </select>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into t_comb_exam_config_item
+    (comb_exam_config_item_id,comb_exam_id,category_id,subject_type_id,num,difficult,score)
+    values
+    <foreach collection ="itemList" item="item" separator =",">
+      (#{item.combExamConfigItemId}, #{item.combExamId}, #{item.categoryId}, #{item.subjectTypeId}, #{item.num}, #{item.difficult}, #{item.score})
+    </foreach >
+  </insert>
+
+  <update id="updateBatch" parameterType="java.util.List">
+    <foreach collection="itemList" item="item" index="index" open="" close="" separator=";">
+      update t_comb_exam_config_item
+      <set>
+        <if test="item.categoryId != null">
+          category_id = #{item.categoryId},
+        </if>
+        <if test="item.subjectTypeId != null">
+          subject_type_id = #{item.subjectTypeId},
+        </if>
+        <if test="item.num != null">
+          num = #{item.num},
+        </if>
+        <if test="item.difficult != null">
+          difficult = #{item.difficult},
+        </if>
+        <if test="item.score != null">
+          score = #{item.score},
+        </if>
+      </set>
+      where comb_exam_config_item_id = #{item.combExamConfigItemId}
+    </foreach>
+  </update>
+</mapper>

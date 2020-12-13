@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  boss.xtrain.util.message.MessageUtil,\
+  boss.xtrain.util.cdn.CdnUtil,\
+  boss.xtrain.util.BeanConfig,\
+  boss.xtrain.util.mail.MailUtil

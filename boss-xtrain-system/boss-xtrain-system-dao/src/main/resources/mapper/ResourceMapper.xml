@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.ResourceMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.Resource">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_resource-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tenant_name" jdbcType="VARCHAR" property="tenantName" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="order_index" jdbcType="INTEGER" property="orderIndex" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="open_img" jdbcType="VARCHAR" property="openImg" />
+    <result column="close_img" jdbcType="VARCHAR" property="closeImg" />
+    <result column="resource_type" jdbcType="TINYINT" property="resourceType" />
+    <result column="leaf" jdbcType="TINYINT" property="leaf" />
+    <result column="action" jdbcType="TINYINT" property="action" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    id, tenant_name, code, order_index, parent_id, url, open_img, close_img, resource_type, 
+    leaf, `action`, remark, `status`, created_by, created_time, updated_by, updated_time, 
+    version
+  </sql>
+
+
+  <!-- start -->
+  <!-- 网关用户鉴权用 -->
+  <select id="selectResourcePermsByUserId" parameterType="Long" resultType="String">
+    select distinct res.url
+    from t_resource res
+           left join t_role_resource rr on res.id = rr.t_res_id
+           left join t_user_role ur on rr.t_r_id = ur.t_r_id
+           left join t_role r on r.id = ur.t_r_id
+    where res.status = 0 and r.status = 0 and ur.id = #{userId}
+  </select>
+  <!-- end -->
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.Role">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_role-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_c_id" jdbcType="BIGINT" property="companyId" />
+    <result column="t_o_id" jdbcType="BIGINT" property="organizationId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    id, t_c_id, t_o_id, `name`, code, remark, `status`, created_by, created_time, updated_by, 
+    updated_time, version
+  </sql>
+
+
+  <!-- start -->
+  <!-- 网关用户鉴权用 -->
+  <resultMap id="SysRoleResult" type="boss.xtrain.security.domain.SysRole">
+    <id column="r_id" jdbcType="BIGINT" property="id" />
+    <result column="r_t_c_id" jdbcType="BIGINT" property="companyId" />
+    <result column="r_t_o_id" jdbcType="BIGINT" property="orgId" />
+    <result column="r_name" jdbcType="VARCHAR" property="name" />
+    <result column="r_code" jdbcType="VARCHAR" property="code" />
+    <result column="r_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="r_status" jdbcType="TINYINT" property="status" />
+    <result column="r_created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="r_created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="r_updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="r_updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="r_version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+
+  <sql id="selectRoleVo">
+    select distinct
+      r.id as r_id,r.t_c_id as r_t_c_id,r.t_o_id as r_t_o_id,
+      r.name as r_name,r.code as r_code,r.remark as r_remark,
+      r.status as r_status,r.created_by as r_created_by,r.created_time as r_created_time,
+      r.updated_by as r_updated_by,r.updated_time as r_updated_time,r.version as r_version
+    from t_role r
+           left join t_user_role ur on ur.t_r_id = r.id
+           left join t_user u on u.id = ur.id
+  </sql>
+
+  <select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
+    <include refid="selectRoleVo"/>
+    WHERE r.status = 0 and ur.id = #{userId}
+  </select>
+  <!-- end -->
+
+</mapper>

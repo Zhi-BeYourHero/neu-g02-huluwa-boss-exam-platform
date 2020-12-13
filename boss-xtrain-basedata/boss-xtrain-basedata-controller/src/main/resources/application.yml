@@ -1,0 +1,20 @@
+#spring:
+#  application:
+#    name: basedata
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 39.101.188.216:8848
+#  datasource:
+#    username: root
+#    password: bes123
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.92.200.55:3306/bes?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+#  main:
+#    allow-bean-definition-overriding: true
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml #定义xml文件位置，不是必须的，如果需要在xml写sql请配置此选项
+#  type-aliases-package: com.boss.bes.basedata.pojo.entity  # 注意：对应实体类的路径
+#logging:
+#  level:
+#    com.boss.bes.database.mapper.*: debug

@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  boss.xtrain.log.api.aspect.MyApiLogAspect

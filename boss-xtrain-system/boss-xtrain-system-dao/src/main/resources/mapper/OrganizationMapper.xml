@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.OrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.Organization">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_organization-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="master" jdbcType="VARCHAR" property="master" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    id, `name`, code, master, tel, address, `status`, created_by, created_time, updated_by, 
+    updated_time, version
+  </sql>
+
+  <select id="selectNameByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
+    select
+    o.id,o.name,o.code,o.master,o.tel,o.address,o.status,o.created_by,o.created_time,o.updated_by,o.updated_time,o.version
+    from `t_organization` o
+    where o.id=#{id}
+   </select>
+</mapper>

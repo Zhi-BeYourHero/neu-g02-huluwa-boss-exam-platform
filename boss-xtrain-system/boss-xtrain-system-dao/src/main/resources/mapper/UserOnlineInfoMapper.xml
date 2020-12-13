@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.UserOnlineInfoMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.UserOnlineInfo">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_user_online_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_u_id" jdbcType="BIGINT" property="userId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="online_time" jdbcType="TIMESTAMP" property="onlineTime" />
+    <result column="offline_time" jdbcType="TIMESTAMP" property="offlineTime" />
+    <result column="stop_time" jdbcType="INTEGER" property="stopTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    id, t_u_id, code, `name`, ip, online_time, offline_time, stop_time, `status`
+  </sql>
+</mapper>

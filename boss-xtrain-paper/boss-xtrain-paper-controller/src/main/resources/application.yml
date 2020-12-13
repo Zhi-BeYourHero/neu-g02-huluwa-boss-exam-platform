@@ -1,0 +1,26 @@
+#spring:
+#  application:
+#    name: paper-center
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 39.101.188.216:8848
+#  datasource:
+#    username: root
+#    password: bes123
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.92.200.55:3306/bes?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+#  main:
+#    allow-bean-definition-overriding: true
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml # mapper文件地址
+#  type-aliases-package: com.boss.bes.paper.pojo.entity #指定实体类位于的包名
+#logging:
+#  level:
+#    com.boss.bes.paper.mapper.*: debug
+#
+###mapper:
+##  #mappers: boss.xtrain.core.data.convention.base.dao.mapper.CommonMapper
+##  #identity: MYSQL
+#server:
+#  port: 8082

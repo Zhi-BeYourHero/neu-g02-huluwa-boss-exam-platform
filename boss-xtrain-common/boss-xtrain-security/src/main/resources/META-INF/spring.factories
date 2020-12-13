@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  boss.xtrain.security.handler.CustomAccessDeniedHandler,\
+  boss.xtrain.security.service.PermissionService,\
+  boss.xtrain.security.config.MethodSecurityConfig,\
+  boss.xtrain.security.handler.AuthExceptionEntryPoint,\
+  boss.xtrain.security.aspect.EntityFieldStufferAspect

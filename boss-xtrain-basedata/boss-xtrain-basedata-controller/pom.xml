@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>boss-xtrain-basedata</artifactId>
+        <groupId>huluwa</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>boss-xtrain-basedata-controller</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.netflix.hystrix</groupId>
+            <artifactId>hystrix-javanica</artifactId>
+            <version>1.5.12</version>
+        </dependency>
+        <!--   start -->
+        <!--   安全模块 -->
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-security</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- SpringCloud Ailibaba Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+
+        <!-- SpringCloud Ailibaba Sentinel -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Ailibaba Nacos Config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+
+        <!--  end      -->
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-basedata-pojo</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-basedata-service</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-basedata-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-core</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-util</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-log</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>com.boss.bes.basedata.BossBesBasedataApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

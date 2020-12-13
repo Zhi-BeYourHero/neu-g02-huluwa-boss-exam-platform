@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.paper.dao.mapper.PaperMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.paper.pojo.entity.Paper">
+    <!--@mbg.generated-->
+    <!--@Table t_paper-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="paper_type" jdbcType="BIGINT" property="paperType" />
+    <result column="difficuty" jdbcType="BIGINT" property="difficulty" />
+    <result column="comb_exam_man" jdbcType="VARCHAR" property="combExamMan" />
+    <result column="comb_exam_time" jdbcType="TIMESTAMP" property="combExamTime" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="discript" jdbcType="VARCHAR" property="discript" />
+    <result column="template" jdbcType="TINYINT" property="template" />
+    <result column="download_times" jdbcType="INTEGER" property="downloadTimes" />
+    <result column="publish_times" jdbcType="INTEGER" property="publishTimes" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, paper_type, difficuty, comb_exam_man, comb_exam_time, score, discript, 
+    `template`, download_times, publish_times, `status`, org_id, company_id, created_by, 
+    created_time, updated_by, updated_time, version
+  </sql>
+
+  <select id="getAllIds" resultType="com.boss.bes.paper.pojo.dto.exam.PaperCompanyListDTO" >
+        SELECT id,`name`,company_id as companyId
+        FROM t_paper
+    </select>
+
+</mapper>

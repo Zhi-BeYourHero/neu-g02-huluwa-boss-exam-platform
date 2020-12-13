@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>neu-g02-huluwa-boss-exam-platform</artifactId>
+        <groupId>huluwa</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>boss-xtrain-paper</artifactId><packaging>pom</packaging>
+    <modules>
+        <module>boss-xtrain-paper-pojo</module>
+        <module>boss-xtrain-paper-dao</module>
+        <module>boss-xtrain-paper-service</module>
+        <module>boss-xtrain-paper-utils</module>
+        <module>boss-xtrain-paper-api</module>
+        <module>boss-xtrain-paper-controller</module>
+        <module>boss-xtrain-paper-config</module>
+    </modules>
+
+    <properties>
+        <huluwa.version>1.0</huluwa.version>
+        <javax.version>8.0</javax.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-paper-pojo</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-paper-dao</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-paper-service</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-paper-controller</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-paper-config</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>huluwa</groupId>
+                <artifactId>boss-xtrain-paper-api</artifactId>
+                <version>${huluwa.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>huluwa</groupId>
+            <artifactId>boss-xtrain-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.58</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javax.version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+
+</project>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.basedata.mapper.SubjectTypeMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.basedata.pojo.entity.SubjectType">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    <!--@Table t_subject_type-->
+    <id column="subject_type_id" jdbcType="BIGINT" property="subjectTypeId" />
+    <result column="subject_type_name" jdbcType="CHAR" property="subjectTypeName" />
+    <result column="attribute" jdbcType="VARCHAR" property="attribute" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    subject_type_id, subject_type_name, `attribute`, `status`, org_id, created_by, created_time, 
+    updated_by, updated_time, version
+  </sql>
+  <select id="queryByCondition" resultType="com.boss.bes.basedata.pojo.dto.subjecttype.SubjectTypeDataItemDTO">
+    SELECT  t.subject_type_id as subjectTypeId,
+    t.subject_type_name as subjectTypeName,
+    t.attribute as attribute,
+    t.status as status,
+    t.updated_time as updatedTime,
+    t.org_id as orgId,
+    t.version as version
+    FROM t_subject_type t
+    <where>
+      <if test="subjectTypeName != ''  and subjectTypeName != null" >
+        AND t.subject_type_name = #{subjectTypeName}
+      </if>
+    </where>
+  </select>
+  <select id="getSubjectTypes" resultType="com.boss.bes.basedata.pojo.dto.subjecttype.SubjectTypeListDTO">
+        select t.subject_type_id as id,
+        t.subject_type_name as name
+        FROM t_subject_type t
+        where t.org_id = #{orgId}
+    </select>
+</mapper>

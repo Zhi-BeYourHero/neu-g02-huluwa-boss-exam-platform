@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.basedata.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.basedata.pojo.entity.Category">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    <!--@Table t_category-->
+    <id column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    category_id, `name`, parent_id, remark, `status`, org_id, created_by, created_time, 
+    updated_by, updated_time, version
+  </sql>
+  <select id="query" resultType="com.boss.bes.basedata.pojo.dto.category.CategoryDTO">
+        SELECT  t.category_id as categoryId,
+        t.name as name,
+        t.remark as remark,
+        t.status as status,
+        t.updated_time as updatedTime,
+        t.org_id as orgId,
+        t.version as version
+        FROM t_category t
+    </select>
+    <select id="queryByCondition" resultType="com.boss.bes.basedata.pojo.dto.category.CategoryDTO">
+        SELECT t.category_id as categoryId,
+        t.name as name,
+        t.remark as remark,
+        t.status as status,
+        t.updated_time as updatedTime,
+        t.org_id as orgId,
+        t.version as version,
+        t.parent_id as parentId
+        FROM t_category t
+        <where>
+            <if test=" name != ''  and name != null">
+                AND t.name = #{name}
+            </if>
+        </where>
+        order by updated_time desc
+    </select>
+    <select id="getCategorys" resultType="com.boss.bes.basedata.pojo.dto.category.CategoryListDTO">
+        select t.category_id as categoryId,
+        t.name as name
+        FROM t_category t
+        where t.org_id = #{orgId}
+    </select>
+</mapper>

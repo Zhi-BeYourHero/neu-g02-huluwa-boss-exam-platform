@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.basedata.mapper.DictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.basedata.pojo.entity.Dictionary">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    <!--@Table t_dictionary-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_o_id" jdbcType="BIGINT" property="tOId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="category" jdbcType="CHAR" property="category" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="BIGINT" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 06 20:04:57 CST 2020.-->
+    id, t_o_id, `name`, category, `value`, remark, `status`, created_by, created_time, 
+    updated_by, updated_time, version
+  </sql>
+    <select id="query" resultType="com.boss.bes.basedata.pojo.dto.dictionary.DictionaryDTO">
+        SELECT  t.id as id,
+        t.name as name,
+        t.category as category,
+        t.value as value,
+        t.remark as remark,
+        t.status as status,
+        t.updated_time as updatedTime,
+        t.t_o_id as orgId,
+        t.version as version
+        FROM t_dictionary t
+    </select>
+    <select id="queryByCondition" resultType="com.boss.bes.basedata.pojo.dto.dictionary.DictionaryDTO">
+        SELECT  t.id as id,
+        t.name as name,
+        t.category as category,
+        t.value as value,
+        t.remark as remark,
+        t.status as status,
+        t.updated_time as updatedTime,
+        t.t_o_id as orgId,
+        t.version as version
+        FROM t_dictionary t
+        <where>
+            <if test=" name != ''  and name != null">
+                AND t.name = #{name}
+            </if>
+        </where>
+        order by updated_time desc
+    </select>
+    <delete id="deleteDictionary">
+        delete from t_dictionary
+        <where>
+          id = #{id}
+        </where>
+    </delete>
+    <select id="getDictionarys" resultType="com.boss.bes.basedata.pojo.dto.dictionary.DictionaryDTO">
+        select t.id as id,
+        t.name as name,
+        t.category as category,
+        t.value as value
+        FROM t_dictionary t
+        where t.t_o_id = #{orgId}
+    </select>
+    <select id="getDictionaryByCategory" resultType="com.boss.bes.basedata.pojo.dto.dictionary.DictionaryDTO">
+        select t.id as id,
+        t.name as name,
+        t.category as category,
+        t.value as value
+        FROM t_dictionary t
+        where t.category = #{category}
+    </select>
+</mapper>

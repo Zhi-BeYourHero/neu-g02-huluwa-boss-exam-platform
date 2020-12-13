@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.exam.mapper.ExamAnswerRecordMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.exam.model.po.ExamAnswerRecord">
+    <!--@mbg.generated generated on Tue Jul 07 10:40:13 CST 2020.-->
+    <!--@Table t_exam_answer_record-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_p_id" jdbcType="BIGINT" property="tPId" />
+    <result column="t_r_id" jdbcType="BIGINT" property="tRId" />
+    <result column="my_answer" jdbcType="VARCHAR" property="myAnswer" />
+    <result column="standard_answer" jdbcType="VARCHAR" property="standardAnswer" />
+    <result column="subject_score" jdbcType="DECIMAL" property="subjectScore" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="evaluate" jdbcType="VARCHAR" property="evaluate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:40:13 CST 2020.-->
+    id, t_p_id, t_r_id, my_answer, standard_answer, subject_score, score, evaluate, `status`, 
+    company_id, org_id, created_by, created_time, updated_by, updated_time, version
+  </sql>
+  <update id="updateSubjectEvaluation" parameterType="com.boss.bes.exam.model.dto.EvaluateDTO">
+        UPDATE t_exam_answer_record set subject_score = #{score},evaluate =#{evaluate},status = 1
+        WHERE t_p_id = #{subjectId,jdbcType=BIGINT} AND t_r_id = #{recordId,jdbcType=BIGINT}
+    </update>
+</mapper>

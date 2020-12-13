@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.RoleResourceMapper">
+
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.RoleResource">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_role_resource-->
+    <id column="t_r_id" jdbcType="BIGINT" property="resourceId" />
+    <result column="t_res_id" jdbcType="BIGINT" property="resourceId" />
+  </resultMap>
+
+  <!-- 批量新增-->
+  <insert id="saveList" parameterType="java.util.List">
+    INSERT INTO t_role_resource (t_r_id, t_res_id)
+    VALUES
+    <foreach collection="roleResources" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT},#{item.resourceId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByRoleIds" parameterType="java.util.List">
+    DELETE FROM t_role_resource
+    WHERE t_r_id in
+    <foreach collection="roleIds"  open="(" close=")" separator=","  item="item" >
+      #{item}
+    </foreach>
+  </delete>
+
+  <delete id="deleteByResourceIds" parameterType="java.util.List">
+    DELETE FROM t_role_resource
+    WHERE t_res_id in
+    <foreach collection="resourceIds"  open="(" close=")" separator=","  item="item" >
+      #{item}
+    </foreach>
+  </delete>
+
+  <select id="queryRoleIdsByResourceId" resultType="java.lang.Long">
+    SELECT t_r_id FROM t_role_resource
+    WHERE t_res_id = #{resourceId}
+  </select>
+
+  <select id="queryResourceIdsByRoleId" resultType="java.lang.Long">
+    SELECT t_res_id FROM t_role_resource
+    WHERE t_r_id = #{roleId}
+  </select>
+
+</mapper>

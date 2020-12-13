@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boss.bes.system.mapper.DepartmentMapper">
+  <resultMap id="BaseResultMap" type="com.boss.bes.system.entity.Department">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    <!--@Table t_department-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="t_c_id" jdbcType="BIGINT" property="companyId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="mnemonic_code" jdbcType="VARCHAR" property="mnemonicCode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="master" jdbcType="VARCHAR" property="master" />
+    <result column="descript" jdbcType="VARCHAR" property="descript" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Jul 07 10:24:37 CST 2020.-->
+    id, t_c_id, `name`, mnemonic_code, code, `level`, parent_id, master, descript, `status`, 
+    created_by, created_time, updated_by, updated_time, version
+  </sql>
+</mapper>
